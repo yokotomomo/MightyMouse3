@@ -4,32 +4,3 @@ jobs:
   build:
     uses: petejohanson/zmk/.github/workflows/build-user-config.yml@feat/pointers-move-scroll
 
-  # ーーーーここから下を追加ーーーー
-  repack:
-    needs: build # buildジョブが終わった後に実行する
-    runs-on: ubuntu-latest
-    steps:
-      # 1. ZMKがビルドしたファームウェアを一旦ダウンロード
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          path: downloaded_artifacts
-
-      # 2. 新しいフォルダを作り、そこにファームウェアを入れる
-      - name: Repack into folder
-        run: |
-          # "MightyMouse_Firmware" というフォルダを作る
-          mkdir -p repack/MightyMouse_Firmware
-          
-          # ビルドされた uf2 ファイルをすべて新しいフォルダにコピー
-          find downloaded_artifacts -name "*.uf2" -exec cp {} repack/MightyMouse_Firmware/ \;
-          
-          # Macで勝手に中身だけ解凍されるのを防ぐため、適当なテキストファイルを同梱する
-          echo "MightyMouse ファームウェアです。" > repack/MightyMouse_Firmware/readme.txt
-
-      # 3. フォルダごと再度アップロード（これが最終的にダウンロードするZIPになります）
-      - name: Upload Repacked Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: MightyMouse_Firmware_Folder # GitHub上で表示されるZIPの名前
-          path: repack/
