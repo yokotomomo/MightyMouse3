@@ -96,10 +96,8 @@
                 &mo 1
                 &mkp RCLK
                 //NFCfrontbottom
-                    //&rst 0 MB5
-                    //&bot 0 MB4
-                    &sys_reset
-                    &bootloader
+                &rst 0 MB5
+                &bot 0 MB4
                 //add
                 &kp SPACE
             >;
