@@ -98,8 +98,8 @@
                 //NFCfrontbottom
                     //&rst 0 MB5
                     //&bot 0 MB4
-                    <&sys_reset>
-                    <&bootloader>
+                    &sys_reset
+                    &bootloader
                 //add
                 &kp SPACE
             >;
